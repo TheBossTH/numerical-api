@@ -1,15 +1,13 @@
 {
   "name": "numerical-api",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "repository": "https://github.com/TheBossTH/numerical-api.git",
+  "author": "Kittidet Cheavachirakul <fvgbhv14@gmail.com>",
+  "license": "MIT",
+  "type": "module",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1"
   }
 }
