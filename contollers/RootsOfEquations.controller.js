@@ -4,7 +4,7 @@
  * @param {import('express').Response} res
  */
 
-export const Bisection = async (req, res) => {
+export const Bisection = (req, res) => {
     const data = req.body
     let xl = data.xl
     let xr = data.xr
@@ -53,7 +53,7 @@ export const Bisection = async (req, res) => {
     })
 }
 
-export const Falseposition = async (req, res) => {
+export const Falseposition = (req, res) => {
     const data = req.body
     let result = []
     let i = 0
@@ -97,7 +97,7 @@ export const Falseposition = async (req, res) => {
     })
 }
 
-export const Newtonraphson = async (req, res) => {
+export const Newtonraphson = (req, res) => {
     const data = req.body
     let result = []
     let x = data.x
@@ -126,7 +126,7 @@ export const Newtonraphson = async (req, res) => {
     })
 }
 
-export const Onepoint = async (req, res) => {
+export const Onepoint = (req, res) => {
     const data = req.body
     let result = []
     let x = data.x
@@ -151,7 +151,7 @@ export const Onepoint = async (req, res) => {
     })
 }
 
-export const Secant = async (req, res) => {
+export const Secant = (req, res) => {
     const data = req.body
     let result = []
     let x0 = data.x0
