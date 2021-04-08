@@ -211,7 +211,7 @@ export const ConjugateGradient = (req, res) => {
             multiply(multiply(transpose(D), A), D)
         x = add(x, multiply(l, D))
         R = subtract(multiply(A, x), B)
-        err = Math.sqrt(multiply(transpose(R), R)).toFixed(8)
+        err = Math.sqrt(multiply(transpose(R), R)).toFixed(5)
         var a1 =
             multiply(multiply(transpose(R), A), D) /
             multiply(transpose(D), multiply(A, D)).toFixed(8)
