@@ -11,7 +11,10 @@
     "cors": "^2.8.5",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "linear-equation-system": "^1.1.1",
+    "mathjs": "^9.3.0",
     "node-fetch": "^2.6.1",
+    "rref": "^0.0.1",
     "swagger-ui-express": "^4.1.6"
   },
   "scripts": {
