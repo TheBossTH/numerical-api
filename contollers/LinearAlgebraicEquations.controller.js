@@ -212,13 +212,10 @@ export const ConjugateGradient = (req, res) => {
         x = add(x, multiply(l, D))
         R = subtract(multiply(A, x), B)
         err = Math.sqrt(multiply(transpose(R), R)).toFixed(8)
-        console.log('Error = ', err)
         var a1 =
             multiply(multiply(transpose(R), A), D) /
             multiply(transpose(D), multiply(A, D)).toFixed(8)
-        console.log('a', iter - 1, ' = ', a1)
         D = add(multiply(R, -1), multiply(a1, D))
-        console.log('D', iter, ' = ', D)
         result.push({
             iteration: iter,
             l,
