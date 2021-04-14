@@ -3,6 +3,7 @@
  * @param {import("express").Request} req
  * @param {import('express').Response} res
  */
+import { derivative, simplify, evaluate } from 'mathjs'
 
 export const Bisection = (req, res) => {
     const data = req.body
@@ -14,15 +15,17 @@ export const Bisection = (req, res) => {
     if (er1 == null || er1 <= 0) {
         er1 = 0.000001
     }
-    let xm, xmbefore, fxm, fxr
+    let xm, xmbefore
     let result = []
-    while (er >= er1) {
+    let fx = (x) => {
+        let a = simplify(data.eq).toString()
+        return evaluate(a, { x })
+    }
+    while (er > er1) {
         //step1
         xm = (xl + xr) / 2
-        fxm = Math.pow(xm, 4) - 13
-        fxr = Math.pow(xr, 4) - 13
         //step2
-        let check = fxm * fxr
+        let check = fx(xm) * fx(xr)
         //step3
         if (check < 0) {
             //step4
@@ -66,11 +69,13 @@ export const Falseposition = (req, res) => {
     if (er1 == null || er1 <= 0) {
         er1 = 0.000001
     }
-    let fxl = (xl) => Math.pow(xl, 4) - 13
-    let fxr = (xr) => Math.pow(xr, 4) - 13
+    let fx = (x) => {
+        let a = simplify(data.eq).toString()
+        return evaluate(a, { x })
+    }
     while (er > er1) {
-        x1 = (xl * fxr(xr) - xr * fxl(xl)) / (fxr(xr) - fxl(xl))
-        f = x1 * fxr(xr)
+        x1 = (xl * fx(xr) - xr * fx(xl)) / (fx(xr) - fx(xl))
+        f = x1 * fx(xr)
         if (i == 0) {
             if (f < 0) {
                 xl = x1
@@ -102,22 +107,32 @@ export const Newtonraphson = (req, res) => {
     let result = []
     let x = data.x
     let i = 0
-    let xi, fx, diffx
+    let xi, fx1, fx2
     let er = 1
     let er1 = data.error
     if (er1 == null || er1 <= 0) {
         er1 = 0.000001
     }
+    let fx = (x) => {
+        let a = simplify(data.eq).toString()
+        return evaluate(a, { x })
+    }
+    let diffx = (x) => {
+        let b = derivative(data.eq, 'x').toString()
+        b = simplify(b).toString()
+        return evaluate(b, { x })
+    }
+
     while (er >= er1) {
         if (i > 0) {
-            fx = (Math.pow(x, 2) - 7).toFixed(5)
-            diffx = (x * 2).toFixed(5)
-            xi = parseFloat(x - (fx / diffx).toFixed(5))
-            er = parseFloat(Math.abs((xi - x) / xi).toFixed(5))
+            fx1 = fx(x).toFixed(6)
+            fx2 = diffx(x).toFixed(6)
+            xi = parseFloat(x - (fx1 / fx2).toFixed(6))
+            er = parseFloat(Math.abs((xi - x) / xi).toFixed(6))
             x = xi
         }
         if (i > 0) {
-            result.push({ iteration: i, xi, fx, diffx, er })
+            result.push({ iteration: i, xi, fx: fx1, diffx: fx2, er })
         }
         i++
     }
@@ -137,9 +152,13 @@ export const Onepoint = (req, res) => {
     if (er1 == null || er1 <= 0) {
         er1 = 0.000001
     }
+    let fx = (x) => {
+        let a = simplify(data.eq).toString()
+        return evaluate(a, { x })
+    }
     while (er >= er1) {
         if (i > 0) {
-            xi = 1 / 4 + x / 2
+            xi = fx(x)
             er = parseFloat(Math.abs((xi - x) / xi).toFixed(5))
             x = xi
             result.push({ iteration: i, x, xi, er })
@@ -163,10 +182,14 @@ export const Secant = (req, res) => {
     if (er1 == null || er1 <= 0) {
         er1 = 0.000001
     }
+    let fx = (x) => {
+        let a = simplify(data.eq).toString()
+        return evaluate(a, { x })
+    }
     while (er >= er1) {
         if (i > 0) {
-            fx0 = (Math.pow(x0, 2) - 7).toFixed(5)
-            fx1 = (Math.pow(x1, 2) - 7).toFixed(5)
+            fx0 = fx(x0).toFixed(5)
+            fx1 = fx(x1).toFixed(5)
             deltax = parseFloat(((fx1 * (x0 - x1)) / (fx0 - fx1)).toFixed(5))
             xi = parseFloat((x1 - deltax).toFixed(5))
             er = parseFloat(Math.abs((xi - x1) / xi).toFixed(6))
