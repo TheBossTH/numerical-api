@@ -15,7 +15,7 @@ export const Bisection = (req, res) => {
     if (er1 == null || er1 <= 0) {
         er1 = 0.000001
     }
-    let xm, xmbefore
+    let xm, xmbefore, fxm
     let result = []
     let fx = (x) => {
         let a = simplify(data.eq).toString()
@@ -24,6 +24,7 @@ export const Bisection = (req, res) => {
     while (er > er1) {
         //step1
         xm = (xl + xr) / 2
+        fxm = fx(xm).toFixed(6)
         //step2
         let check = fx(xm) * fx(xr)
         //step3
@@ -42,12 +43,14 @@ export const Bisection = (req, res) => {
             xr = xm
             xmbefore = xm
         }
+        xm = xm.toFixed(6)
         result.push({
             iteration: i,
             xl,
             xr,
             xm,
             er,
+            fxm,
         })
         i++
     }
@@ -93,7 +96,9 @@ export const Falseposition = (req, res) => {
             }
         }
         if (i > 0) {
-            result.push({ iteration: i, xl, xr, x1, er })
+            let sx1 = x1.toFixed(6)
+            let fx1 = fx(x1).toFixed(6)
+            result.push({ iteration: i, xl, xr, x1: sx1, er, fx1 })
         }
         i++
     }
@@ -107,7 +112,7 @@ export const Newtonraphson = (req, res) => {
     let result = []
     let x = data.x
     let i = 0
-    let xi, fx1, fx2
+    let xi, fx1, fx2, fxi
     let er = 1
     let er1 = data.error
     if (er1 == null || er1 <= 0) {
@@ -129,10 +134,9 @@ export const Newtonraphson = (req, res) => {
             fx2 = diffx(x).toFixed(6)
             xi = parseFloat(x - (fx1 / fx2).toFixed(6))
             er = parseFloat(Math.abs((xi - x) / xi).toFixed(6))
+            fxi = fx(xi).toFixed(6)
+            result.push({ iteration: i, xi, fx: fx1, diffx: fx2, er, fxi })
             x = xi
-        }
-        if (i > 0) {
-            result.push({ iteration: i, xi, fx: fx1, diffx: fx2, er })
         }
         i++
     }
@@ -146,7 +150,7 @@ export const Onepoint = (req, res) => {
     let result = []
     let x = data.x
     let i = 0
-    let xi
+    let xi, sxi, fxi
     let er = 1
     let er1 = data.error
     if (er1 == null || er1 <= 0) {
@@ -160,8 +164,10 @@ export const Onepoint = (req, res) => {
         if (i > 0) {
             xi = fx(x)
             er = parseFloat(Math.abs((xi - x) / xi).toFixed(5))
+            sxi = xi.toFixed(6)
+            fxi = fx(xi).toFixed(6)
+            result.push({ iteration: i, x, xi: sxi, er, fxi })
             x = xi
-            result.push({ iteration: i, x, xi, er })
         }
         i++
     }
@@ -176,7 +182,7 @@ export const Secant = (req, res) => {
     let x0 = data.x0
     let x1 = data.x1
     let i = 1
-    let xi, fx0, fx1, deltax
+    let xi, fx0, fx1, deltax, fxi
     let er = 1
     let er1 = data.error
     if (er1 == null || er1 <= 0) {
@@ -195,7 +201,8 @@ export const Secant = (req, res) => {
             er = parseFloat(Math.abs((xi - x1) / xi).toFixed(6))
             x0 = x1
             x1 = xi
-            result.push({ iteration: i, x0, x1, fx0, fx1, deltax, xi, er })
+            fxi = fx(xi).toFixed(5)
+            result.push({ iteration: i, x0, x1, fx0, fx1, deltax, xi, er, fxi })
         }
         i++
     }

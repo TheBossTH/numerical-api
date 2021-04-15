@@ -80,5 +80,18 @@ export const Lagrangepolynomials = (req, res) => {
     let ans = parseFloat(yp.toFixed(4))
     res.json({ ans })
 }
+export const Splineinterpolation = (req, res) => {
+    const data = req.body
+    let x = []
+    let y = []
+    for (const key in data.x) {
+        x.push(data.x[key])
+    }
+    for (const key in data.y) {
+        y.push(data.y[key])
+    }
 
-export default { Newtondivided, Lagrangepolynomials }
+    res.json({ ans })
+}
+
+export default { Newtondivided, Lagrangepolynomials, Splineinterpolation }

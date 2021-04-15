@@ -12,5 +12,7 @@ leastsquaresregression_route.post('/linearregression', (req, res) =>
 leastsquaresregression_route.post('/polynomialregression', (req, res) =>
     PolynomialRegression(req, res),
 )
-
+leastsquaresregression_route.post('/splineinterpolation', (req, res) =>
+    Splineinterpolation(req, res),
+)
 export default leastsquaresregression_route
