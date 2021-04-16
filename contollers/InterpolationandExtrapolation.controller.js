@@ -3,6 +3,7 @@
  * @param {import("express").Request} req
  * @param {import('express').Response} res
  */
+import Spline from 'cubic-spline'
 
 export const Newtondivided = (req, res) => {
     const data = req.body
@@ -80,18 +81,23 @@ export const Lagrangepolynomials = (req, res) => {
     let ans = parseFloat(yp.toFixed(4))
     res.json({ ans })
 }
+
 export const Splineinterpolation = (req, res) => {
     const data = req.body
     let x = []
     let y = []
+    let result = []
     for (const key in data.x) {
         x.push(data.x[key])
     }
     for (const key in data.y) {
         y.push(data.y[key])
     }
-
-    res.json({ ans })
+    const spline = new Spline(x, y)
+    for (const key in spline.ks) {
+        result.push(spline.ks[key])
+    }
+    res.json({ result })
 }
 
-export default { Newtondivided, Lagrangepolynomials, Splineinterpolation }
+export default { Newtondivided, Lagrangepolynomials }

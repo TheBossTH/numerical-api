@@ -9,10 +9,12 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "cubic-spline": "^3.0.3",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "linear-equation-system": "^1.1.1",
     "mathjs": "^9.3.0",
+    "ml-regression-multivariate-linear": "^2.0.3",
     "node-fetch": "^2.6.1",
     "regression": "^2.0.1",
     "rref": "^0.0.1",

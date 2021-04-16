@@ -4,6 +4,7 @@
  * @param {import('express').Response} res
  */
 import regressions from 'regression'
+import multiplelines from './lib/regression.js'
 
 export const LinearRegression = (req, res) => {
     const data = req.body
@@ -44,7 +45,34 @@ export const PolynomialRegression = (req, res) => {
     res.json({ data: poly, ans: poly.equation })
 }
 
+export const MultipleLinearRegression = (req, res) => {
+    const data = req.body
+    let x1 = []
+    let x2 = []
+    let x3 = []
+    let y = []
+    let datas = []
+    for (const key in data.x1) {
+        x1.push(data.x1[key])
+    }
+    for (const key in data.x2) {
+        x2.push(data.x2[key])
+    }
+    for (const key in data.x3) {
+        x3.push(data.x3[key])
+    }
+    for (const key in data.y) {
+        y.push(data.y[key])
+    }
+    x1.map((r, i) => {
+        datas.push([x1[i], x2[i], x3[i], y[i]])
+    })
+    const multi = multiplelines(datas)
+    res.json({ ans: multi })
+}
+
 export default {
     LinearRegression,
     PolynomialRegression,
+    MultipleLinearRegression,
 }
