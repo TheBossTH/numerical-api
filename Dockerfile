@@ -10,5 +10,3 @@ RUN npm install
 EXPOSE 8080
 
 CMD [ "npm" , "run","dev" ]
-
-# docker run -it --rm -d -p 8080:8080 theboss38/numerical-api:latest
