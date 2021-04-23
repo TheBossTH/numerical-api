@@ -95,9 +95,6 @@ export const Splineinterpolation = (req, res) => {
         y.push(data.y[key])
     }
     const spline = new Spline(x, y)
-    // for (const key in spline.ks) {
-    //     result.push(spline.ks[key])
-    // }
     res.json({ result: spline.at(xi) })
 }
 
