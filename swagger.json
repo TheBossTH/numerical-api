@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
-    "title": "basic-express",
+    "title": "swagger-api",
     "version": "1.0.0",
-    "description": "basic express for friend",
+    "description": "swagger express",
     "host": "localhost:8080",
     "basePath": "/api/v1/",
     "tags": [

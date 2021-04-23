@@ -85,6 +85,7 @@ export const Lagrangepolynomials = (req, res) => {
 export const Splineinterpolation = (req, res) => {
     const data = req.body
     let x = []
+    let xi = data.xi
     let y = []
     let result = []
     for (const key in data.x) {
@@ -94,10 +95,10 @@ export const Splineinterpolation = (req, res) => {
         y.push(data.y[key])
     }
     const spline = new Spline(x, y)
-    for (const key in spline.ks) {
-        result.push(spline.ks[key])
-    }
-    res.json({ result })
+    // for (const key in spline.ks) {
+    //     result.push(spline.ks[key])
+    // }
+    res.json({ result: spline.at(xi) })
 }
 
 export default { Newtondivided, Lagrangepolynomials }
