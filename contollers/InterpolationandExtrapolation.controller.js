@@ -98,4 +98,4 @@ export const Splineinterpolation = (req, res) => {
     res.json({ result: spline.at(xi) })
 }
 
-export default { Newtondivided, Lagrangepolynomials }
+export default { Newtondivided, Lagrangepolynomials, Splineinterpolation }
