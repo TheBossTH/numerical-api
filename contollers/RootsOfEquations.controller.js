@@ -28,22 +28,9 @@ export const Bisection = (req, res) => {
         //step2
         let check = fx(xm) * fx(xr)
         //step3
-        if (check < 0) {
-            //step4
-            if (i > 0) {
-                er = parseFloat(Math.abs((xm - xmbefore) / xm).toFixed(6))
-            }
-            xl = xm
-            xmbefore = xm
-        } else {
-            //step4
-            if (i > 0) {
-                er = parseFloat(Math.abs((xm - xmbefore) / xm).toFixed(6))
-            }
-            xr = xm
-            xmbefore = xm
+        if (i > 0) {
+            er = parseFloat(Math.abs((xm - xmbefore) / xm).toFixed(6))
         }
-        xm = xm.toFixed(6)
         result.push({
             iteration: i,
             xl,
@@ -52,6 +39,12 @@ export const Bisection = (req, res) => {
             er,
             fxm,
         })
+        if (check < 0) {
+            xl = xm
+        } else {
+            xr = xm
+        }
+        xmbefore = xm
         i++
     }
     res.json({
@@ -88,18 +81,15 @@ export const Falseposition = (req, res) => {
         } else {
             if (f < 0) {
                 er = parseFloat(Math.abs((x1 - xl) / x1).toFixed(5))
-
                 xl = x1
             } else {
                 er = parseFloat(Math.abs((x1 - xr) / x1).toFixed(5))
                 xr = x1
             }
         }
-        if (i > 0) {
-            let sx1 = x1.toFixed(6)
-            let fx1 = fx(x1).toFixed(6)
-            result.push({ iteration: i, xl, xr, x1: sx1, er, fx1 })
-        }
+        let sx1 = x1.toFixed(6)
+        let fx1 = fx(x1).toFixed(6)
+        result.push({ iteration: i, xl, xr, x1: sx1, er, fx1 })
         i++
     }
     res.json({
